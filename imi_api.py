@@ -3,7 +3,7 @@ import logging
 import json
 from datetime import datetime
 import pytz
-import mysql.connector
+import psycopg2
 from config import API_KEY, REQUESTER_ID, DB_HOST, DB_USER, DB_PASS, DB_DATABASE
 
 # Configure logging format
@@ -50,8 +50,8 @@ def fetch_tasmart_data(datapoints_url, headers):
 # Function to insert data into the database
 def insert_into_database(data_to_insert):
     try:
-        # Establish a connection to the MySQL database
-        conn = mysql.connector.connect(
+        # Establish a connection to the PostgreSQL database
+        conn = psycopg2.connect(
             host=DB_HOST,
             user=DB_USER,
             password=DB_PASS,
@@ -62,7 +62,7 @@ def insert_into_database(data_to_insert):
         cursor = conn.cursor()
 
         # Define the SQL INSERT statement (adjust the table name and columns as needed)
-        insert_sql = "INSERT INTO tasmart_data_table (timestamp, tasmart_id, measured_flow, measured_power) VALUES (%d, %s, %d, %d)"
+        insert_sql = "INSERT INTO tasmart_data_table (timestamp, tasmart_id, measured_flow, measured_power) VALUES (%s, %s, %s, %s)"
 
         # Execute the INSERT statement with data
         cursor.execute(insert_sql, (data_to_insert['timestamp'], data_to_insert['tasmart_id'], data_to_insert['measured_flow'], data_to_insert['measured_power']))
@@ -81,7 +81,6 @@ def insert_into_database(data_to_insert):
             cursor.close()
         if 'conn' in locals():
             conn.close()
-
 
 def main():
     try:
