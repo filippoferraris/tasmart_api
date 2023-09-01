@@ -43,11 +43,15 @@ Before running the script, make sure you have the following prerequisites instal
    }
    ```
 
-   Replace `"Your_Target_Project_Name"` with the name of the target project in the IMI API.
+   Replace `"Your_Target_Project_Name"` with the name of the target project that you can find in hyCloud by IMI.
 
-2. **Modify the `config.py` file** with your database connection details:
+2. **Modify the `config.py` file** with your API KEYs and database connection details:
 
    ```python
+   API_KEY = 'xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx'
+   REQUESTER_ID = 'xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx'
+
+
    DB_HOST = "your_database_host"
    DB_USER = "your_database_user"
    DB_PASS = "your_database_password"
@@ -56,7 +60,8 @@ Before running the script, make sure you have the following prerequisites instal
 
 ## Usage
 
-To run the script, execute the following command:
+To run the script, execute the following command 
+(I'm showing here python3 command assuming to run the script from an EC2 Amazon Linux 2003. Substitute with "python" instead if needed)
 
 ```shell
 python3 imi_api.py
@@ -71,7 +76,3 @@ To schedule the script to run every 15 minutes, you can use a tool like Cron on 
 ```
 
 Make sure to adjust the path to your script accordingly.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
