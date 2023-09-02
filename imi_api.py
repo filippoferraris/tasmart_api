@@ -62,10 +62,10 @@ def insert_into_database(data_to_insert):
         cursor = conn.cursor()
 
         # Define the SQL INSERT statement (adjust the table name and columns as needed)
-        insert_sql = "INSERT INTO tasmart_data_table (timestamp, tasmart_id, measured_flow, measured_power) VALUES (%s, %s, %s, %s)"
+        insert_sql = "INSERT INTO tasmart_data_table (timestamp, tasmart_id, measured_flow, measured_power, energy_counter_regime_1, energy_counter_regime_2) VALUES (%s, %s, %s, %s, %s, %s)"
 
         # Execute the INSERT statement with data
-        cursor.execute(insert_sql, (data_to_insert['timestamp'], data_to_insert['tasmart_id'], data_to_insert['measured_flow'], data_to_insert['measured_power']))
+        cursor.execute(insert_sql, (data_to_insert['timestamp'], data_to_insert['tasmart_id'], data_to_insert['measured_flow'], data_to_insert['measured_power'], data_to_insert['energy_counter_regime_1'], data_to_insert['energy_counter_regime_2']))
 
         # Commit the transaction
         conn.commit()
@@ -105,7 +105,7 @@ def main():
                 tasmarts = project_data.get('tasmarts', [])
 
                 for tasmart in tasmarts:
-                    datapoints_url = f'https://cloud.imi-hydronic.com{tasmart["href"]["datapoints"]}?limit=1&properties[]=measured_flow&properties[]=measured_power'
+                    datapoints_url = f'https://cloud.imi-hydronic.com{tasmart["href"]["datapoints"]}?limit=1&properties[]=measured_flow&properties[]=measured_power&properties[]=energy_counter_regime_1&properties[]=energy_counter_regime_2'
                     tasmart_data = fetch_tasmart_data(datapoints_url, headers)
 
                     if tasmart_data:
@@ -119,19 +119,25 @@ def main():
                             cet_time_str, timestamp = convert_utc_to_cet(point['time'])
                             measured_flow = int(point['measured_flow'])
                             measured_power = int(point['measured_power'])
+                            energy_counter_regime_1 = int(point['energy_counter_regime_1'])
+                            energy_counter_regime_2 = int(point['energy_counter_regime_2'])
                             tasmart_id = tasmart['id']
 
                             logger.info('Time from API: %s', point['time'])
                             logger.info('Time CET: %s', cet_time_str)
                             logger.info('Timestamp (CET): %s', timestamp)
-                            logger.info('Measured Flow: %s', measured_flow)
-                            logger.info('Measured Power: %s', measured_power)
+                            logger.info('Measured Flow: %d', measured_flow)
+                            logger.info('Measured Power: %d', measured_power)
+                            logger.info('Energy counter regime 1: %d', energy_counter_regime_1)
+                            logger.info('Energy counter regime 2: %d', energy_counter_regime_2)
 
                             data_to_insert = {
                                 'timestamp': timestamp,
                                 'tasmart_id': tasmart_id,
                                 'measured_flow': measured_flow,
-                                'measured_power': measured_power
+                                'measured_power': measured_power,
+                                'energy_counter_regime_1': energy_counter_regime_1,
+                                'energy_counter_regime_2': energy_counter_regime_2
                             }
 
                             # Insert the data into the database
