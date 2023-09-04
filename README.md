@@ -18,13 +18,19 @@ A best way to do this would be using IMI APIs.
 IMI is an international producer of Hydraulic Valves, and the product that is subject of this API integration is their TA-Smart.
 
 This is an example of a TA-Smart with a pipe diameter of 65mm:
+
 ![TA-Smart image](https://www.imi-hydronic.com/sites/default/files/styles/large/https/assets.imi-hydronic.com/Pictures/Image_Gallery_TA/Photos/TA-Smart/TA-Smart_DN65_w_sensor_2.gif?itok=gJ8RX4yd)
 
-The API Documentation can be found in the /documentation folder, updated on the 4th Sept 2023. Future updates can be requested to the IMI R&D team asking to Bastien Ravot at ![bastien.ravot@imi-hydronic.com](bastien.ravot@imi-hydronic.com)
+The API Documentation can be found in the /documentation folder, updated on the 4th Sept 2023. Future updates can be requested to the IMI R&D team asking to Bastien Ravot at [bastien.ravot@imi-hydronic.com](bastien.ravot@imi-hydronic.com)
 
-The TA-Smart Documentation can be found on the ![IMI website](https://www.imi-hydronic.com/it/product/ta-smart)
+The TA-Smart Documentation can be found on the [IMI website](https://www.imi-hydronic.com/it/product/ta-smart)
 
-IMI also provides a full Web App where users can access all the data from the IMI TA-Smart Valves. The IMI Web App platform can be accessed via ![this link](https://cloud.imi-hydronic.com/projects/469bb186-150a-49ee-a86f-da1947e0bd0e/ta-smart/b5e6a019-ce22-4814-a5db-8badb169d8c6).
+IMI also provides a full Web App where users can access all the data from the IMI TA-Smart Valves. The IMI Web App platform can be accessed via [this link](https://cloud.imi-hydronic.com/projects/469bb186-150a-49ee-a86f-da1947e0bd0e/ta-smart/b5e6a019-ce22-4814-a5db-8badb169d8c6).
+
+Screenshot of the IMI Web App (example of the visualization of one valve):
+
+<img src="documentation/hycloud.png" alt="hycloud" width="500">
+
 
 
 ### energy_counter_regime_1 and 2... what the hell are them?
@@ -48,14 +54,14 @@ Also, be aware that IMI is "learning how to do APIs as well...", and this means 
 If you have comments about the APIs, questions, or even tips to give to IMI, they'll be very happy to receive them!
 
 ### Get IMI credentials and API KEYs
-Before starting, be familiar with the ![HyCloud](https://cloud.imi-hydronic.com) App by IMI and get the credential to access it. (username and password).
+Before starting, be familiar with the [HyCloud](https://cloud.imi-hydronic.com) App by IMI and get the credential to access it. (username and password).
 To have those credentials you need to ask to IMI R&D team.
 
 To access the APIs you'll need both a company REQUESTER_ID and an API_KEY.
 
 To get a REQUESTER_ID you need to contact directly IMI R&D team. They provide a single REQUESTER_ID per company, we do have one in Enerbrain, and Filippo Ferraris can provide it separately from this repository.
 
-An API_KEY can be individually generated from ![HyCloud](https://cloud.imi-hydronic.com)
+An API_KEY can be individually generated from [HyCloud](https://cloud.imi-hydronic.com)
 
 ### Setup your environment to test this script
 
