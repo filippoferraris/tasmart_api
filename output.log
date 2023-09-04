@@ -1,2 +1,0 @@
-/home/ec2-user/tasmart_api/run_imi_api.sh: line 2: /home/ec2-user/tasmart_api: Is a directory
-python3: can't open file '/home/ec2-user/imi_api.py': [Errno 2] No such file or directory

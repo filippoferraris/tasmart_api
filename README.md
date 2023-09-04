@@ -76,3 +76,14 @@ To schedule the script to run every 15 minutes, you can use a tool like Cron on 
 ```
 
 Make sure to adjust the path to your script accordingly.
+
+## Documentation from IMI
+
+IMI is an international producer of Hydraulic Valves, and the product that is subject of this API integration is their TA-Smart.
+
+The API Documentation can be found in the /documentation folder, updated on the 4th Sept 2023
+
+The TA-Smart Documentation can be found on the IMI website
+
+The IMI Web App platform can be accessed at: 
+`https://cloud.imi-hydronic.com/projects/469bb186-150a-49ee-a86f-da1947e0bd0e/ta-smart/b5e6a019-ce22-4814-a5db-8badb169d8c6`
