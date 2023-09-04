@@ -29,7 +29,7 @@ IMI also provides a full Web App where users can access all the data from the IM
 
 Screenshot of the IMI Web App (example of the visualization of one valve):
 
-<img src="documentation/hycloud.png" alt="hycloud" width="500">
+<img src="documentation/hycloud.png" alt="hycloud" width="800">
 
 
 
