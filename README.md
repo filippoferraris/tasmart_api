@@ -1,17 +1,21 @@
 # IMI API Data Retrieval Script
 
-This Python script retrieves energy consumption data from TA-Smart valves using the IMI API, and saves it into a PostgreSQL database on AWS.
+This Python script retrieves energy consumption data from **TA-Smart valves** produced by IMI using the **IMI APIs**, and saves the data into a PostgreSQL database on AWS.
 
 ## WHY?
 
-The goal of this project is an internal prototype only (please make sure this is just a prototype!) with the scope of work to:
-- Test IMI APIs (keep in mind we are the first one using them in the world...)
-- Understand if the data needed for Enerbrain is available via API
-- Understand the best approach to retreive energy consumption data via API
+The goal of this project is to do an internal prototype **(please consider this to be only a prototype!)** with the goals to:
+- Test IMI APIs
+- Understand if the data useful for Enerbrain is available
+- Test one possible approach to retreive energy consumption data via API
+- Test data format
 
-Currently in Enerbrain we retreive this data via Modbus using an eGateway Modbus, however this method has some issues (each valve needs to be connected to an eGateway Modbus, with the need to maintain the phisical infrastructure to retreive the data)
+Currently in Enerbrain we retreive data from TA-Smart Valves **via Modbus using an eGateway Modbus**, however this method has some issues (each valve needs to be connected to an eGateway Modbus, with the need to maintain the phisical infrastructure to retreive the data)
 
 A best way to do this would be using IMI APIs.
+
+For internal knowledge, we do have a few projects where we are using IMI valves, and we have a commercial partnership to use IMI valves in future projects.
+
 
 ## Documentation about IMI and their APIs
 
@@ -21,24 +25,25 @@ This is an example of a TA-Smart with a pipe diameter of 65mm:
 
 ![TA-Smart image](https://www.imi-hydronic.com/sites/default/files/styles/large/https/assets.imi-hydronic.com/Pictures/Image_Gallery_TA/Photos/TA-Smart/TA-Smart_DN65_w_sensor_2.gif?itok=gJ8RX4yd)
 
-The API Documentation can be found in the /documentation folder, updated on the 4th Sept 2023. Future updates can be requested to the IMI R&D team asking to Bastien Ravot at [bastien.ravot@imi-hydronic.com](bastien.ravot@imi-hydronic.com)
+The **API Documentation** can be found [here](documentation/HyCloud_APIv1-220929a.pdf) in the /documentation folder of this repository, updated on the 4th Sept 2023. 
+Future updates can be requested to the IMI R&D team asking to Bastien Ravot at [bastien.ravot@imi-hydronic.com](bastien.ravot@imi-hydronic.com)
 
 The TA-Smart Documentation can be found on the [IMI website](https://www.imi-hydronic.com/it/product/ta-smart)
 
-IMI also provides a full Web App where users can access all the data from the IMI TA-Smart Valves. The IMI Web App platform can be accessed via [this link](https://cloud.imi-hydronic.com/projects/469bb186-150a-49ee-a86f-da1947e0bd0e/ta-smart/b5e6a019-ce22-4814-a5db-8badb169d8c6).
+IMI also provides a **full Web App** where users can access all the data from the IMI TA-Smart Valves. The IMI Web App platform can be accessed via [this link](https://cloud.imi-hydronic.com/projects/469bb186-150a-49ee-a86f-da1947e0bd0e/ta-smart/b5e6a019-ce22-4814-a5db-8badb169d8c6).
 
 Screenshot of the IMI Web App (example of the visualization of one valve):
 
 <img src="documentation/hycloud.png" alt="hycloud" width="800">
 
 
-
 ### energy_counter_regime_1 and 2... what the hell are them?
 Energy in a TA_Smart is saved in multiple ways... we can access for example the realtime power used, but also two energy counters, 1 and 2.
-Why are they 2? And what do they represent?
+
+**Why are they 2? And what do they represent?**
 In reality IMI developed 2 registers to allow maximum flexibility, but during the installation of the valves phisically on site, it is up to the installers to decide what to do with this registers!
 
-At Lingotto for example only energy_counter_regime_1 is used, and 2 is always = 0.
+At Lingotto for example **only energy_counter_regime_1 is used**, and 2 is always = 0.
 
 To be honest I don't know what IMI had in mind to have 2 registers, but they explained one could be used for cooling power and one for heating power, however they didn't developed the firmware of the valves yet for this...
 For now it would be healty to save both to our database just in case but most likely regime_2 will always be = 0.
@@ -47,7 +52,9 @@ For now it would be healty to save both to our database just in case but most li
 ## Prerequisites - before starting!
 
 ### About IMI
-Before playing around with the script, make sure you actually understand what is a IMI TA-Smart Valve! Ask colleagues of OPS about it, and learn from the documentation, because there are several data that can be collected.
+**Before playing around with the script, make sure you actually understand what is a IMI TA-Smart Valve!** Ask colleagues of OPS about it, and learn from the documentation and IMI website, because there are several data that can be collected.
+
+(It is suggested to go to see one live at Lingotto in Torino)
 
 Also, be aware that IMI is "learning how to do APIs as well...", and this means they openly admitted this is the first time they created APIs and documentation about them... If you have questions, their R&D team is available on Slack and Filippo Ferraris can help to do the introductions to the right people. 
 
@@ -57,7 +64,7 @@ If you have comments about the APIs, questions, or even tips to give to IMI, the
 Before starting, be familiar with the [HyCloud](https://cloud.imi-hydronic.com) App by IMI and get the credential to access it. (username and password).
 To have those credentials you need to ask to IMI R&D team.
 
-To access the APIs you'll need both a company REQUESTER_ID and an API_KEY.
+To access the APIs you'll need **both a company REQUESTER_ID and an API_KEY**.
 
 To get a REQUESTER_ID you need to contact directly IMI R&D team. They provide a single REQUESTER_ID per company, we do have one in Enerbrain, and Filippo Ferraris can provide it separately from this repository.
 
@@ -99,7 +106,7 @@ SSH to your EC2 (or connect to it in other ways)
    pip install -r requirements.txt
    ```
 
-Note: you may need to install pip... as by default is not installed on Amazon Linnux 2023. To install pip it can be enough to run "sudo yum install python3-pip -y" or maybe you need to download the full installation package if yum doesn't find it... 
+Note: you may need to install pip... as by default is not installed on Amazon Linux 2023. To install pip it can be enough to run "sudo yum install python3-pip -y" or maybe you need to download the full installation package if yum doesn't find it... 
 
 ## Configuration
 
@@ -183,6 +190,8 @@ To schedule the script to run every 15 minutes, you can use a tool like Cron on 
 ```
 
 Make sure to adjust the path to your script accordingly.
+
+(ps. I'm aware using Lambda is probably more cost efficient in AWS... but so far I'm using EC2 for this testing)
 
 ## Next steps, known issues, additional notes
 
